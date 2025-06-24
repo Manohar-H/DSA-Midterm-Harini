@@ -26,7 +26,11 @@ public class Main {
                 case 2 -> addTask();
                 case 3 -> markTaskComplete();
                 case 4 -> viewTasks();
-                case 5 -> running = false;
+                case 5 -> {
+                    System.out.print("Are you sure you want to exit? (y/n): ");
+                    String confirm = scanner.nextLine().trim().toLowerCase();
+                    if (confirm.equals("y")) running = false;
+                }
                 default -> System.out.println("Invalid choice. Try again.");
             }
         }
@@ -99,16 +103,23 @@ public class Main {
             System.out.println("No users available.");
             return null;
         }
-        System.out.println("Choose a user:");
+        System.out.println("Choose a user (0 to cancel):");
         for (int i = 0; i < userCount; i++) {
             System.out.println((i + 1) + ". " + users[i].getName());
         }
         System.out.print("Enter choice: ");
         int index = readInt() - 1;
+
+        if (index == -1) {
+            System.out.println("🔙 Action cancelled.");
+            return null;
+        }
+
         if (index < 0 || index >= userCount) {
             System.out.println("Invalid user choice.");
             return null;
         }
+
         return users[index];
     }
 
