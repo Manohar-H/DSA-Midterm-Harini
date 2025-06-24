@@ -1,7 +1,9 @@
 package model;
 
-public class TaskList {
-    private class Node {
+import java.io.Serializable;
+
+public class TaskList implements Serializable {
+    private class Node implements Serializable {
         Task task;
         Node next;
 

@@ -2,6 +2,8 @@ import model.User;
 
 import java.util.Scanner;
 
+import java.io.*;
+
 public class Main {
     private static final int MAX_USERS = 3;
     private static final User[] users = new User[MAX_USERS];
@@ -10,6 +12,7 @@ public class Main {
 
     public static void main(String[] args) {
         boolean running = true;
+        loadData();
 
         while (running) {
             System.out.println("\n=== TO-DO LIST MANAGER ===");
@@ -29,6 +32,7 @@ public class Main {
                 case 5 -> {
                     System.out.print("Are you sure you want to exit? (y/n): ");
                     String confirm = scanner.nextLine().trim().toLowerCase();
+                    saveData();
                     if (confirm.equals("y")) running = false;
                 }
                 default -> System.out.println("Invalid choice. Try again.");
@@ -139,6 +143,34 @@ public class Main {
             } catch (NumberFormatException e) {
                 System.out.print("Invalid number. Try again: ");
             }
+        }
+    }
+
+    private static final String DATA_FILE = "data.ser";
+
+    @SuppressWarnings("unchecked")
+    private static void loadData() {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(DATA_FILE))) {
+            User[] loadedUsers = (User[]) in.readObject();
+            for (User user : loadedUsers) {
+                if (user != null) {
+                    users[userCount++] = user;
+                }
+            }
+            System.out.println("✅ Data loaded successfully.");
+        } catch (FileNotFoundException e) {
+            System.out.println("No saved data found. Starting fresh.");
+        } catch (Exception e) {
+            System.out.println("⚠️ Failed to load data: " + e.getMessage());
+        }
+    }
+
+    private static void saveData() {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(DATA_FILE))) {
+            out.writeObject(users);
+            System.out.println("✅ Data saved.");
+        } catch (IOException e) {
+            System.out.println("⚠️ Failed to save data: " + e.getMessage());
         }
     }
 }
