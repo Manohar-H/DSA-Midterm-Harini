@@ -1,0 +1,31 @@
+# Default ignored files
+/shelf/
+/.idea/workspace.xml
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Build output
+out/
+target/
+bin/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Java-specific
+*.class
+*.log
+
+data.ser
+
+# Maven / Gradle
+.mvn/
+.gradle/
+build/
+
+# Temporary files
+*.tmp
+*.swp
