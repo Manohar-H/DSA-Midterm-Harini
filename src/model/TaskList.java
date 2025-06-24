@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 public class TaskList implements Serializable {
     private class Node implements Serializable {
@@ -14,8 +15,8 @@ public class TaskList implements Serializable {
 
     private Node head;
 
-    public void addTask(String description) {
-        Task task = new Task(description);
+    public void addTask(String description, LocalDate dueDate, Priority priority) {
+        Task task = new Task(description, dueDate, priority);
         Node newNode = new Node(task);
         if (head == null) {
             head = newNode;
@@ -55,5 +56,31 @@ public class TaskList implements Serializable {
             temp = temp.next;
             i++;
         }
+    }
+
+    public void deleteTask(int index) {
+        if (head == null) {
+            System.out.println("List is empty.");
+            return;
+        }
+        if (index == 0) {
+            head = head.next;
+            System.out.println("Task deleted.");
+            return;
+        }
+        Node prev = head;
+        Node curr = head.next;
+        int i = 1;
+        while (curr != null) {
+            if (i == index) {
+                prev.next = curr.next;
+                System.out.println("Task deleted.");
+                return;
+            }
+            prev = curr;
+            curr = curr.next;
+            i++;
+        }
+        System.out.println("Invalid task index.");
     }
 }

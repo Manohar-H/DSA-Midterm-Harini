@@ -1,5 +1,7 @@
+import model.Priority;
 import model.User;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 import java.io.*;
@@ -23,6 +25,7 @@ public class Main {
             System.out.println("3️⃣  Mark Task Completed");
             System.out.println("4️⃣  View Tasks");
             System.out.println("5️⃣  Exit");
+            System.out.println("6️⃣  Delete Task");
             System.out.print("Enter your choice: ");
             int choice = readInt();
 
@@ -37,6 +40,7 @@ public class Main {
                     saveData();
                     if (confirm.equals("y")) running = false;
                 }
+                case 6 -> deleteTask();
                 default -> System.out.println("Invalid choice. Try again.");
             }
         }
@@ -71,15 +75,42 @@ public class Main {
         if (user == null) return;
 
         System.out.print("Enter task description: ");
-        String task = scanner.nextLine().trim();
-
-        if (task.isEmpty()) {
+        String desc = scanner.nextLine().trim();
+        if (desc.isEmpty()) {
             System.out.println("❗ Task description cannot be empty.");
             return;
         }
 
-        user.addTask(task);
-        System.out.println("✅ Task added to " + user.getName() + ".");
+        System.out.print("Enter due date (YYYY-MM-DD): ");
+        LocalDate dueDate;
+        try {
+            dueDate = LocalDate.parse(scanner.nextLine().trim());
+        } catch (Exception e) {
+            System.out.println("❗ Invalid date format.");
+            return;
+        }
+
+        System.out.print("Enter priority (LOW, MEDIUM, HIGH): ");
+        Priority priority;
+        try {
+            priority = Priority.valueOf(scanner.nextLine().trim().toUpperCase());
+        } catch (Exception e) {
+            System.out.println("❗ Invalid priority.");
+            return;
+        }
+
+        user.addTask(desc, dueDate, priority);
+        System.out.println("✅ Task added.");
+    }
+
+    private static void deleteTask() {
+        User user = chooseUser();
+        if (user == null) return;
+
+        user.printTasks();
+        System.out.print("Enter task index to delete: ");
+        int index = readInt();
+        user.deleteTask(index);
     }
 
     private static void markTaskComplete() {
@@ -90,7 +121,7 @@ public class Main {
         System.out.print("Enter task index to mark complete: ");
         int index = readInt();
         user.markTaskCompleted(index);
-        System.out.println("✅ Task marked complete (if index was valid).");
+        System.out.println("✅ Task marked as complete!");
     }
 
     private static void viewTasks() {

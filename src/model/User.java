@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 public class User implements Serializable {
     private final String name;
@@ -15,8 +16,12 @@ public class User implements Serializable {
         return name;
     }
 
-    public void addTask(String taskDescription) {
-        taskList.addTask(taskDescription);
+    public void addTask(String description, LocalDate dueDate, Priority priority) {
+        taskList.addTask(description, dueDate, priority);
+    }
+
+    public void deleteTask(int index) {
+        taskList.deleteTask(index);
     }
 
     public void markTaskCompleted(int index) {
