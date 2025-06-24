@@ -44,8 +44,14 @@ public class TaskList implements Serializable {
     public void printTasks() {
         Node temp = head;
         int i = 0;
+        if (temp == null) {
+            System.out.println("  No tasks found.");
+            return;
+        }
+
         while (temp != null) {
-            System.out.println(i + ": " + temp.task);
+            String status = temp.task.isCompleted() ? "✅" : "❌";
+            System.out.println("  [" + i + "] " + status + " " + temp.task.getDescription());
             temp = temp.next;
             i++;
         }

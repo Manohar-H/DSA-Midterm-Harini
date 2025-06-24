@@ -15,12 +15,14 @@ public class Main {
         loadData();
 
         while (running) {
-            System.out.println("\n=== TO-DO LIST MANAGER ===");
-            System.out.println("1. Create User");
-            System.out.println("2. Add Task");
-            System.out.println("3. Mark Task Completed");
-            System.out.println("4. View Tasks");
-            System.out.println("5. Exit");
+            System.out.println("\n==============================");
+            System.out.println("📋 TO-DO LIST MANAGER MENU");
+            System.out.println("==============================");
+            System.out.println("1️⃣  Create User");
+            System.out.println("2️⃣  Add Task");
+            System.out.println("3️⃣  Mark Task Completed");
+            System.out.println("4️⃣  View Tasks");
+            System.out.println("5️⃣  Exit");
             System.out.print("Enter your choice: ");
             int choice = readInt();
 

@@ -24,7 +24,7 @@ public class User implements Serializable {
     }
 
     public void printTasks() {
-        System.out.println("Tasks for " + name + ":");
+        System.out.println("🧍Tasks for User: " + name);
         taskList.printTasks();
     }
 }
