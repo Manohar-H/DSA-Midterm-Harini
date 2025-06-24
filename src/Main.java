@@ -36,17 +36,24 @@ public class Main {
 
     private static void createUser() {
         if (userCount >= MAX_USERS) {
-            System.out.println("Maximum number of users reached.");
+            System.out.println("❗ Maximum number of users reached.");
             return;
         }
         System.out.print("Enter username: ");
         String name = scanner.nextLine().trim();
-        if (findUser(name) != null) {
-            System.out.println("User already exists!");
+
+        if (name.isEmpty()) {
+            System.out.println("❗ Username cannot be empty.");
             return;
         }
+
+        if (findUser(name) != null) {
+            System.out.println("❗ User already exists!");
+            return;
+        }
+
         users[userCount++] = new User(name);
-        System.out.println("User created.");
+        System.out.println("✅ User '" + name + "' created.");
     }
 
     private static void addTask() {
@@ -55,8 +62,14 @@ public class Main {
 
         System.out.print("Enter task description: ");
         String task = scanner.nextLine().trim();
+
+        if (task.isEmpty()) {
+            System.out.println("❗ Task description cannot be empty.");
+            return;
+        }
+
         user.addTask(task);
-        System.out.println("Task added.");
+        System.out.println("✅ Task added to " + user.getName() + ".");
     }
 
     private static void markTaskComplete() {
@@ -67,9 +80,14 @@ public class Main {
         System.out.print("Enter task index to mark complete: ");
         int index = readInt();
         user.markTaskCompleted(index);
+        System.out.println("✅ Task marked complete (if index was valid).");
     }
 
     private static void viewTasks() {
+        if (userCount == 0) {
+            System.out.println("No users or tasks to show.");
+            return;
+        }
         for (int i = 0; i < userCount; i++) {
             users[i].printTasks();
             System.out.println();
